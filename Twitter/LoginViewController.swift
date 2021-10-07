@@ -6,21 +6,23 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    // Body
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
 // Functions
     override func viewDidAppear(_ animated: Bool) {
+        // Body: Skip login page once logged in, through checking toggle
         if UserDefaults.standard.bool(forKey: "userLoggedIn") == true {
             self.performSegue(withIdentifier: "loginToHome", sender: self)
         }
     }
     
     @IBAction func loginButton(_ sender: Any) {
+        // Declarations
         let tokenURL:String = "https://api.twitter.com/oauth/request_token"
         
+        // Body: login button with toggle implementation to save status
         TwitterAPICaller.client?.login(url: tokenURL, success: {
             UserDefaults.standard.set(true, forKey: "userLoggedIn")
             self.performSegue(withIdentifier: "loginToHome", sender: self)

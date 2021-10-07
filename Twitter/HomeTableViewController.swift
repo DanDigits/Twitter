@@ -17,11 +17,20 @@ class HomeTableViewController: UITableViewController {
         loadTweets()
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        //self.tableView.rowHeight = UITableView.automaticDimension
+        //self.tableView.estimatedRowHeight = 150
     }
+    
+    // DOES NOT WORK FOR SOME REASON
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.loadTweets()
+    }
+   
     
 // Functions
     @IBAction func logoutButton(_ sender: Any) {
-        // Body
+        // Body: set logged in toggle to false to log user out.
         UserDefaults.standard.set(false, forKey: "userLoggedIn")
         TwitterAPICaller.client?.logout()
         self.dismiss(animated: true, completion: nil)
@@ -40,6 +49,10 @@ class HomeTableViewController: UITableViewController {
         if let imageData = data {
             cell.profileImageView.image = UIImage(data: imageData)
         }
+        
+        cell.setFavorited(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         return cell
     }
     
@@ -49,7 +62,7 @@ class HomeTableViewController: UITableViewController {
         let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
         let myParams = ["count": numberOfTweets]
         
-        // Body: Call API and assign receptions to tweetArray
+        // Body: Call API and set recieved information into tweetArray
         TwitterAPICaller.client?.getDictionariesRequest(url: myURL, parameters: myParams, success: { (tweets: [NSDictionary]) in
             self.tweetArray.removeAll()
             for tweet in tweets {
@@ -83,6 +96,7 @@ class HomeTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplay Cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Body: load more tweets if null index is equal to the current tweet count
         if indexPath.row + 1 == tweetArray.count {
             loadMoreTweets()
         }
