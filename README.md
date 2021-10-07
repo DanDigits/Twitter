@@ -2,7 +2,7 @@
 
 This is a basic twitter app to view, compose, favorite, and retweet tweets.
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 ## User Stories
 
@@ -24,9 +24,9 @@ Here's a walkthrough of implemented user stories:
 
 <img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-# Project 3 - *Name of App Here*
+# Project 3 - *Twitters*
 
-**Name of your app** is a basic twitter app to read your tweets.
+**Twitters** is a basic twitter app to read your tweets.
 
 Time spent: **8** hours spent in total
 
